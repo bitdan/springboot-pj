@@ -7,24 +7,24 @@ package com.pj.system.controller;
  */
 
 
+import cn.dev33.satoken.util.SaResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
 @RestController
-@EnableBinding(Source.class)
 @RequiredArgsConstructor
 public class MessageController {
 
     private final StreamBridge streamBridge;
 
     @GetMapping("/api/send")
-    public void send() {
-        streamBridge.send("output", UUID.randomUUID().toString());
+    public SaResult send() {
+        String message = UUID.randomUUID().toString();
+        streamBridge.send("source-in-0", message);
+        return SaResult.ok();
     }
 }
