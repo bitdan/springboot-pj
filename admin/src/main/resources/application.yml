@@ -72,6 +72,8 @@ mybatis-plus:
     # 关闭日志记录 (可单纯使用 p6spy 分析) org.apache.ibatis.logging.nologging.NoLoggingImpl
     # 默认日志输出 org.apache.ibatis.logging.slf4j.Slf4jImpl
     logImpl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    banner: false
 
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
@@ -92,6 +94,7 @@ sa-token:
   is-log: true
   # jwt秘钥
   jwt-secret-key: ayy2B7m9s5mP3m33N3bHG9dkZqim9jed
+  is-print: false
 
 easy-es:
   global-config:

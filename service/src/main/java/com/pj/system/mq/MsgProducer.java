@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 
+import java.time.LocalDateTime;
 import java.util.function.Function;
 
 /**
@@ -20,7 +21,7 @@ public class MsgProducer {
     @Bean
     public Function<String, Message<String>> source() {
         return message -> {
-            log.info("发送第1次条消息： {}", message);
+            log.info("{} 发送1条消息： {}", LocalDateTime.now(), message);
             return MessageBuilder.withPayload(message)
                     .build();
         };
