@@ -94,19 +94,21 @@ sa-token:
   is-log: true
   # jwt秘钥
   jwt-secret-key: ayy2B7m9s5mP3m33N3bHG9dkZqim9jed
+  # 打印 banner
   is-print: false
 
 easy-es:
+  banner: false       # 打印 banner
   global-config:
     process_index_mode: manual #smoothly:平滑模式, not_smoothly:非平滑模式, manual:手动模式(默认)
     async-process-index-blocking: true # 异步处理索引是否阻塞主线程 默认阻塞
     distributed: false # 项目是否分布式环境部署,默认为true, 如果是单机运行可填false,将不加分布式锁,效率更高.
-    reindexTimeOutHours: 72 # 重建索引超时时间 单位小时,默认72H 根据迁移索引数据量大小灵活指定
+    reindexTimeOutHours: 72 # 重建索引超时时间 单位小时,默认72H 根据迁移索引数据量大小灵活指
 
 management:
   health:
     rabbit:
-      enabled: false
+      enabled: false    # rabbit 健康检测
 
 
 
