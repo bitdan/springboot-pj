@@ -43,6 +43,7 @@
         <easy-es.version>2.0.0-beta5</easy-es.version>
         <elasticsearch.version>7.15.2</elasticsearch.version>
         <guava.version>33.1.0-jre</guava.version>
+        <rabbit.version>3.2.10</rabbit.version>
     </properties>
 
     <dependencyManagement>
@@ -66,7 +67,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
-                <version>3.2.10</version>
+                <version>${rabbit.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/io.kubernetes/client-java -->
