@@ -8,6 +8,8 @@ package com.pj.system.controller;
 
 
 import cn.dev33.satoken.util.SaResult;
+import com.pj.system.domain.dto.MessageDTO;
+import com.pj.utils.SpringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,7 @@ public class MessageController {
     public SaResult send() {
         String message = UUID.randomUUID().toString();
         streamBridge.send("source-in-0", message);
+        SpringUtils.context().publishEvent(new MessageDTO("source-in-0", message));
         return SaResult.ok();
     }
 }

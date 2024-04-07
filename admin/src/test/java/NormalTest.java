@@ -2,6 +2,7 @@ import cn.dev33.satoken.secure.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+import java.security.SecureRandom;
 import java.util.Locale;
 
 import static com.pj.utils.Preconditions.precondition;
@@ -33,6 +34,17 @@ public class NormalTest {
         Locale locale = Locale.getDefault();
 
         log.info(String.valueOf(locale));
+    }
+
+    @Test
+    public void test4() {
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < 32) {
+            sb.append(Integer.toHexString(random.nextInt(16)));
+        }
+        String output = sb.toString();
+        log.info(output);
     }
 
 }
