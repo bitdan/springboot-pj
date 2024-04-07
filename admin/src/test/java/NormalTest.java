@@ -2,6 +2,8 @@ import cn.dev33.satoken.secure.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 import static com.pj.utils.Preconditions.precondition;
 
 /**
@@ -25,4 +27,12 @@ public class NormalTest {
 
         log.info(hashpw);
     }
+
+    @Test
+    public void test3() {
+        Locale locale = Locale.getDefault();
+
+        log.info(String.valueOf(locale));
+    }
+
 }
