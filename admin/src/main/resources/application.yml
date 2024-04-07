@@ -20,7 +20,7 @@ logging:
   level:
     com.pj: @logging.level@
     org.springframework: warn
-  config: classpath:logback-plus.xml
+  config: classpath:logback.xml
 
 
 redisson:
