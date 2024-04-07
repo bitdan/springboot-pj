@@ -1,3 +1,4 @@
+import cn.dev33.satoken.secure.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -15,5 +16,13 @@ public class NormalTest {
     public void test1() {
         String str = "";
         precondition(str, String::isEmpty, () -> "String cannot be empty");
+    }
+
+    @Test
+    public void test2() {
+        String password = "";
+        String hashpw = BCrypt.hashpw(password);
+
+        log.info(hashpw);
     }
 }

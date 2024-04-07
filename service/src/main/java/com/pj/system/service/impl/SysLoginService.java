@@ -1,11 +1,10 @@
-package com.pj.system.service;
+package com.pj.system.service.impl;
 
 import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
-
+import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pj.constant.CacheConstants;
 import com.pj.constant.Constants;
@@ -13,7 +12,6 @@ import com.pj.core.domain.dto.RoleDTO;
 import com.pj.core.domain.entity.SysUser;
 import com.pj.core.domain.event.LogininforEvent;
 import com.pj.core.domain.model.LoginUser;
-import com.pj.core.domain.model.XcxLoginUser;
 import com.pj.enums.DeviceType;
 import com.pj.enums.LoginType;
 import com.pj.enums.UserStatus;
@@ -22,7 +20,6 @@ import com.pj.system.mapper.SysUserMapper;
 import com.pj.utils.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +30,7 @@ import java.util.function.Supplier;
 /**
  * 登录校验方法
  *
- *   
+ *
  */
 @RequiredArgsConstructor
 @Slf4j
@@ -67,7 +64,7 @@ public class SysLoginService {
 //        }
         // 框架登录不限制从什么表查询 只要最终构建出 LoginUser 即可
         SysUser user = loadUserByUsername(username);
-//        checkLogin(LoginType.PASSWORD, username, () -> !BCrypt.checkpw(password, user.getPassword()));
+        checkLogin(LoginType.PASSWORD, username, () -> !BCrypt.checkpw(password, user.getPassword()));
         // 此处可根据登录用户的数据不同 自行创建 loginUser 属性不够用继承扩展就行了
         LoginUser loginUser = buildLoginUser(user);
         // 生成token
@@ -131,21 +128,22 @@ public class SysLoginService {
 //        return StpUtil.getTokenValue();
 //    }
 //
-//    /**
-//     * 退出登录
-//     */
-//    public void logout() {
-//        try {
-//            LoginUser loginUser = LoginHelper.getLoginUser();
-//            recordLogininfor(loginUser.getUsername(), Constants.LOGOUT, MessageUtils.message("user.logout.success"));
-//        } catch (NotLoginException ignored) {
-//        } finally {
-//            try {
-//                StpUtil.logout();
-//            } catch (NotLoginException ignored) {
-//            }
-//        }
-//    }
+
+    /**
+     * 退出登录
+     */
+    public void logout() {
+        try {
+            LoginUser loginUser = LoginHelper.getLoginUser();
+            recordLogininfor(loginUser.getUsername(), Constants.LOGOUT, MessageUtils.message("user.logout.success"));
+        } catch (NotLoginException ignored) {
+        } finally {
+            try {
+                StpUtil.logout();
+            } catch (NotLoginException ignored) {
+            }
+        }
+    }
 //
     /**
      * 记录登录信息
@@ -305,10 +303,10 @@ public class SysLoginService {
         // 获取用户登录错误次数，默认为0 (可自定义限制策略 例如: key + username + ip)
         int errorNumber = ObjectUtil.defaultIfNull(RedisUtils.getCacheObject(errorKey), 0);
         // 锁定时间内登录 则踢出
-//        if (errorNumber >= maxRetryCount) {
-//            recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
-//            throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
-//        }
+        if (errorNumber >= maxRetryCount) {
+            recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
+            throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
+        }
 
         if (supplier.get()) {
             // 错误次数递增
@@ -320,7 +318,7 @@ public class SysLoginService {
                 throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
             } else {
                 // 未达到规定错误次数
-                recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
+//                recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
                 throw new UserException(loginType.getRetryLimitCount(), errorNumber);
             }
         }

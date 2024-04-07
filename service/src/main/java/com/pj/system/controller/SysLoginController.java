@@ -1,35 +1,24 @@
 package com.pj.system.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-
 import com.pj.constant.Constants;
 import com.pj.core.domain.R;
-import com.pj.core.domain.entity.SysMenu;
-import com.pj.core.domain.entity.SysUser;
-import com.pj.core.domain.model.EmailLoginBody;
 import com.pj.core.domain.model.LoginBody;
-import com.pj.core.domain.model.LoginUser;
-import com.pj.core.domain.model.SmsLoginBody;
-import com.pj.system.domain.vo.RouterVo;
 import com.pj.system.service.ISysMenuService;
-import com.pj.system.service.SysLoginService;
-import com.pj.utils.LoginHelper;
+import com.pj.system.service.impl.SysLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * 登录验证
  *
- *   
+ *
  */
 @Validated
 @RequiredArgsConstructor
