@@ -52,11 +52,7 @@ public class KubernetesClientAPI {
     }
 
     public V1PodList getPodNameList() throws ApiException {
-        V1PodList execute = this.v1ApiInstance.listPodForAllNamespaces().execute();
-        for (V1Pod item : execute.getItems()) {
-            log.info("item is : {}", item);
-        }
-        return execute;
+        return this.v1ApiInstance.listPodForAllNamespaces().execute();
     }
 
 
