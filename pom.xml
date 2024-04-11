@@ -32,7 +32,6 @@
         <satoken.version>1.37.0</satoken.version>
         <lombok.version>1.18.30</lombok.version>
         <hutool.version>5.8.22</hutool.version>
-        <fastjson.version>1.2.83</fastjson.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <dynamic-ds.version>3.5.2</dynamic-ds.version>
         <mybatis-plus.version>3.5.4</mybatis-plus.version>
@@ -143,12 +142,6 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-extra</artifactId>
                 <version>${hutool.version}</version>
-            </dependency>
-            <!--FastJson依赖-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>

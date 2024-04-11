@@ -1,8 +1,9 @@
 package com.pj.aspect;
 
 
-import com.alibaba.fastjson.JSON;
+
 import com.pj.annotation.PrintlnLog;
+import com.pj.utils.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -45,7 +46,7 @@ public class PrintlnLogAspect {
         }
         log.info("------------------------------- start --------------------------");
         log.info("Method detail Description: {}", methodDetailDescription);
-        log.info("Request Args: {}", JSON.toJSONString(joinPoint.getArgs()));
+        log.info("Request Args: {}", JacksonUtil.writeValueAsString(joinPoint.getArgs()));
         if (logAnnotation.executionTime()) {
             timeThreadLocal.set(System.currentTimeMillis());
         }
@@ -60,7 +61,7 @@ public class PrintlnLogAspect {
         }
         if (logAnnotation.returnValue()) {
             if (retVal != null) {
-                log.info("Return Value of Method [{}]: {}", description, JSON.toJSONString(retVal));
+                log.info("Return Value of Method [{}]: {}", description, JacksonUtil.writeValueAsString(retVal));
             } else {
                 log.info("Method [{}] is void type.", description);
             }
