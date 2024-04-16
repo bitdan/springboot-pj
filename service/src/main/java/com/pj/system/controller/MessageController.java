@@ -8,6 +8,7 @@ package com.pj.system.controller;
 
 
 import cn.dev33.satoken.util.SaResult;
+import com.pj.annotation.PrintlnLog;
 import com.pj.system.domain.dto.MessageDTO;
 import com.pj.utils.SpringUtils;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class MessageController {
 
     private final StreamBridge streamBridge;
 
+    @PrintlnLog(description = "MessageController.send", executionTime = true)
     @GetMapping("/api/send")
     public SaResult send() {
         String message = UUID.randomUUID().toString();

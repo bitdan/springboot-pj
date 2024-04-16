@@ -17,18 +17,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PortPoolDTO {
 
-
-    private String orgCode;
-
-
+    private String code;
     private Integer port;
-
-
     private Integer portType;
-
-
     private Integer status;
-
     private boolean once;
-
+    private String secondOne;
 }

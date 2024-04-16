@@ -4,6 +4,7 @@ import com.pj.converter.BaseDTOConverter;
 import com.pj.model.PortPool;
 import com.pj.model.PortPoolDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 /**
@@ -15,5 +16,13 @@ import org.mapstruct.ReportingPolicy;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PortPoolDTOConverter extends BaseDTOConverter<PortPoolDTO, PortPool> {
+
+    @Mapping(source = "newOne", target = "secondOne")
+    @Override
+    PortPoolDTO toDto(PortPool po);
+
+    @Mapping(source = "secondOne", target = "newOne")
+    @Override
+    PortPool toPO(PortPoolDTO dto);
 
 }

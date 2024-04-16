@@ -21,7 +21,7 @@ public class MapstructSample {
     private final PortPoolDTOConverter dtoConverter;
 
     public void samp() {
-        PortPool pre001 = new PortPool("pre001", 8080, 1, 1);
+        PortPool pre001 = new PortPool("pre001", 8080, 1, 1, "pre002");
         PortPoolDTO dto = dtoConverter.toDto(pre001);
         log.info("dto is : {}", dto);
     }

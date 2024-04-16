@@ -15,29 +15,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class PortPool {
-
-    /**
-     * 机构编码
-     */
-
-    private String orgCode;
-    /**
-     * 端口
-     */
-
+    private String code;
     private Integer port;
-
-    /**
-     * 端口应用类别，0-VSM代理端口；1-密码服务管理端代理端口；2-密码服务业务端口
-     */
-
     private Integer portType;
-
-    /**
-     * 应用状态, 状态：0: 未用  1：启用
-     */
-
     private Integer status;
+    private String newOne;
 }
