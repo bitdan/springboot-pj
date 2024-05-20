@@ -1,8 +1,15 @@
 import cn.dev33.satoken.secure.BCrypt;
+import com.pj.Application;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.redisson.api.RBloomFilter;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import static com.pj.utils.Preconditions.precondition;
@@ -13,7 +20,11 @@ import static com.pj.utils.Preconditions.precondition;
  * @date 2024/4/3 17:23:53
  */
 @Slf4j
+@SpringBootTest(classes = Application.class)
 public class NormalTest {
+
+    @Autowired
+    private  RedissonClient redissonClient;
 
     @Test
     public void test1() {
@@ -47,4 +58,50 @@ public class NormalTest {
         log.info(output);
     }
 
+    public int retNum(int input) {
+        int n = 0;
+        String str = input + "=";
+        List<Integer> numList = new ArrayList<>();
+
+        // 填充小于等于输入的四次方数
+        for (int i = 1; i <= Math.sqrt(Math.sqrt(input)); i++) {
+            numList.add(i * i * i * i);
+        }
+        // 从最大的四次方根开始遍历，直到找到四次方根的组合使得它们的和等于输入
+        for (int i = numList.size() - 1; i >= 0; i--) {
+            if (input - numList.get(i) >= 0) {
+                input -= numList.get(i);
+                str += ((int) Math.sqrt(Math.sqrt(numList.get(i))) + "~4+");
+                n++;
+                i++;
+            }
+            if (input == 0) break;
+        }
+        // 去掉字符串最后的"+"
+        str = str.substring(0, str.length() - 1);
+        System.out.println(str);
+        return n;
+    }
+
+    @Test
+    public void test5() {
+        int num = retNum(83);
+        log.info("num is : {}", num);
+    }
+
+    @Test
+    public void test6() {
+        RBloomFilter<Object> myfilter = redissonClient.getBloomFilter("myfilter");
+        myfilter.tryInit(100,0.01);
+        myfilter.add("app");
+        myfilter.add("666");
+        myfilter.add("八股文");
+        boolean contains = myfilter.contains("666");
+        log.info("contains is : {}", contains);
+        boolean contains2 = myfilter.contains("老王");
+        log.info("contains2 is : {}", contains2);
+        long count = myfilter.count();
+        log.info("count is : {}", count);
+
+    }
 }
