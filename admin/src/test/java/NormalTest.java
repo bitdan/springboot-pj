@@ -20,11 +20,7 @@ import static com.pj.utils.Preconditions.precondition;
  * @date 2024/4/3 17:23:53
  */
 @Slf4j
-@SpringBootTest(classes = Application.class)
 public class NormalTest {
-
-    @Autowired
-    private  RedissonClient redissonClient;
 
     @Test
     public void test1() {
@@ -89,19 +85,5 @@ public class NormalTest {
         log.info("num is : {}", num);
     }
 
-    @Test
-    public void test6() {
-        RBloomFilter<Object> myfilter = redissonClient.getBloomFilter("myfilter");
-        myfilter.tryInit(100,0.01);
-        myfilter.add("app");
-        myfilter.add("666");
-        myfilter.add("八股文");
-        boolean contains = myfilter.contains("666");
-        log.info("contains is : {}", contains);
-        boolean contains2 = myfilter.contains("老王");
-        log.info("contains2 is : {}", contains2);
-        long count = myfilter.count();
-        log.info("count is : {}", count);
 
-    }
 }
