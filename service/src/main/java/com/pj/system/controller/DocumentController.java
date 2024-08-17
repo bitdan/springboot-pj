@@ -3,7 +3,6 @@ package com.pj.system.controller;
 import cn.dev33.satoken.util.SaResult;
 import com.pj.system.esmapper.Document;
 import com.pj.system.esmapper.DocumentMapper;
-import com.pj.system.service.SysLoginService;
 import lombok.RequiredArgsConstructor;
 import org.dromara.easyes.core.conditions.update.LambdaEsUpdateWrapper;
 import org.dromara.easyes.core.core.EsWrappers;

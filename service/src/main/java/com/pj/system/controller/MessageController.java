@@ -32,4 +32,14 @@ public class MessageController {
         SpringUtils.context().publishEvent(new MessageDTO("source-in-0", message));
         return SaResult.ok();
     }
+
+    private final String produce = "addBounsChannel-out-0";
+
+    @GetMapping("/rocketmq/send")
+    public SaResult rocketmqSend() {
+        String message = UUID.randomUUID().toString();
+        streamBridge.send(produce, message);
+        SpringUtils.context().publishEvent(new MessageDTO(produce, message));
+        return SaResult.ok();
+    }
 }

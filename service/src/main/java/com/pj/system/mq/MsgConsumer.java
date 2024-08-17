@@ -21,4 +21,13 @@ public class MsgConsumer {
         log.info("MsgConsumer.sink");
         return msg -> log.info("sink接到消息：{}", msg.getPayload());
     }
+
+
+    @Bean
+    public Consumer<Message<String>> addBounsChannel() {
+        return message -> {
+            log.info("addBounsChannel接到消息：{}", message);
+        };
+
+    }
 }

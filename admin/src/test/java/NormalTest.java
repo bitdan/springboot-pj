@@ -30,7 +30,7 @@ public class NormalTest {
 
     @Test
     public void test2() {
-        String password = "";
+        String password = "union@123";
         String hashpw = BCrypt.hashpw(password);
 
         log.info(hashpw);
