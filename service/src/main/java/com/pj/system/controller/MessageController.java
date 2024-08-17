@@ -12,10 +12,14 @@ import com.pj.annotation.PrintlnLog;
 import com.pj.system.domain.dto.MessageDTO;
 import com.pj.utils.SpringUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RestController
@@ -37,9 +41,12 @@ public class MessageController {
 
     @GetMapping("/rocketmq/send")
     public SaResult rocketmqSend() {
-        String message = UUID.randomUUID().toString();
+        MessageBuilder builder = MessageBuilder.withPayload(UUID.randomUUID() + "==" + LocalDateTime.now())
+                .setHeader(RocketMQHeaders.TAGS, "binder")
+                .setHeader(RocketMQHeaders.KEYS, "my-key");
+        Message message = builder.build();
         streamBridge.send(produce, message);
-        SpringUtils.context().publishEvent(new MessageDTO(produce, message));
+        SpringUtils.context().publishEvent(new MessageDTO(produce,message.toString()));
         return SaResult.ok();
     }
 }
